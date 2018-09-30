@@ -12,10 +12,10 @@ def make_bett():
                 return bett
             else:
                 print(warning)
-                continue
+                
         except ValueError:
             print(warning)
-            continue
+            
 
 
     
@@ -24,10 +24,10 @@ def make_ran():
     return ran
 
 def validate(ran):
-    count = 0
-    while count < 10:
-        count += 1
+    times = 10
+    while times > 0:
         bett = make_bett()
+        times -= 1 
       
         if bett == ran:
             print('Congraduation! You win! The answer is: ' + str(ran))
@@ -35,15 +35,16 @@ def validate(ran):
         
         elif bett > ran:
             print('\nOops! Your guess %s is too large.' % str(bett))
-            print('\nOnly %s times left' % str(10-count))
-            continue
+            print('\nYou still have %s times.' % str(times))
         
         else:
             print('\nOops! Your guess %s is too small.' % str(bett))
-            print('\nOnly %s times left' % str(10-count))
-            continue
-    if count == 10:
+            print('\nYou still have %s times.' % str(times))
+        
+    if times == 0:
             print("Sorry, you lose! The answer is : " + str(ran))
+            raw_input('Press any key to restart: ')
+            start()
 
 def start(max_round=10):
     print('-----Welcome to the Guess Number Game!-----\n')

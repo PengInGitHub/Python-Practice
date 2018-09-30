@@ -18,6 +18,11 @@ from sys import exit
 # the animation effects root from the change of locatins of images
 # knocking or crashing of obejcts are defined as the collision of img rects
 
+# make use of pygame.sprite.Sprite class
+# Sprite represent a single movable obj, it has Surface & Rect two objs
+
+
+
 ##############################
 #      set up the screen     #
 ##############################       
@@ -118,6 +123,7 @@ enemies_down = pygame.sprite.Group()
 
 score = 0
 clock = pygame.time.Clock()
+# shoot_frequency is used to control the frequency of bullet shooting
 shoot_frequency, enemy_frequency = 0, 0
 player_down_index = 16
 # flag to control the running of game
@@ -129,29 +135,43 @@ while Running:
     # set FPS Frame Per Second as 60
     clock.tick(60)
     
-    # shoot and control the frequency of shooting
     ##############################
-    #        handel bullet       #
+    #   handel bullet frequency  #
     ##############################
     
+    # shoot and control the frequency of shooting    
+    # bullet should keep on coming out of the player while the player is alive
     # generate and control the frequency of bullet
     
     # if player is safe and sound
-    # shoot!
+    # make a shooting every 15 times of iteration!
     if not player.is_hit:
         if shoot_frequency % 15 == 0:
             bullet_sound.play()
             player.shoot(bullet_img)
+
         shoot_frequency += 1
         if shoot_frequency >= 15:
             shoot_frequency = 0
  
+    ##############################
+    #    let the bullets fly     #
+    ##############################    
+    
+    for bullet in player.bullets:
+        # bullet moves at a steady spped
+        bullet.move()
+        
+        # remove bullet if it is out of screen
+        if bullet.rect.bottom < 0:
+            player.bullets.remove(bullet)
 
     ##############################
-    #         init enemy         #
+    #    handel enemy frequency  #
     ##############################
     
     # generate enemies with certain frequency
+    # every 50 iterations generate an enemy
     if enemy_frequency % 50 == 0:
         # at random position
         enemy1_pos = [random.randint(0, SCREEN_WIDTH-enemy1_rect.width), 0]
@@ -164,29 +184,25 @@ while Running:
     if enemy_frequency >= 100:
         enemy_frequency = 0
        
-
     ##############################
-    #    let the bullets fly     #
-    ##############################
+    #    let the enemies move    #
+    ##############################  
 
-    for bullet in player.bullets:
-        # bullet moves at a steady spped
-        bullet.move()
-        # remove bullet if it is out of screen
-        if bullet.rect.bottom < 0:
-            player.bullets.remove(bullet)
-   
-    ########################################################
-    #       enemy crashed with player or got knocked       #
-    ########################################################
     
     # let the enemy move
     for enemy in enemies1:
         # move the air plane
         enemy.move()
         
-     # handle the effects when enemy and player crashed
-     # crash is defined as collide_circle(obj1, obj2) == True
+        # remove enemy if it is out of screen
+        if enemy.rect.top < 0:
+            enemies1.remove(enemy)
+ 
+    # enemy crashed with player or got knocked
+        
+    # handle the effects when enemy and player crashed
+    # crash is defined as collide_circle(obj1, obj2) == True
+    # collision test
     if pygame.sprite.collide_circle(enemy, player):
         # add enemy to enemies_down
         enemies_down.add(enemy)
@@ -198,9 +214,6 @@ while Running:
         game_over_sound.play()
         break
     
-    # remove enemy if it is out of screen
-    if enemy.rect.top < 0:
-        enemies1.remove(enemy)
     
     # handle the effects when enemy is knocked (collide(enemy, bullet))
     # add to knocked-down enemies

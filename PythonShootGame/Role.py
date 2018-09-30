@@ -31,6 +31,8 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.midbottom = init_pos
         self.speed = 10
     
+    # how bullet moves
+    # move from the btm to the upper part of screen in a straight line
     def move(self):
         self.rect.top -= self.speed
  
@@ -104,19 +106,25 @@ class Player(pygame.sprite.Sprite):
 #####################################
 
 ### Enemy
-# class extends pygame.sprite.Sprite       
+# class extends pygame.sprite.Sprite   
+# so that Enemy has two properties: self.image and self.rect
+# method to set self.rect = self.image.get_rect()
+# method to set obj location: self.rect.topleft = init_pos
 class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, enemy_img, enemy_down_imgs, init_pos): 
         pygame.sprite.Sprite.__init__(self)
+        # normal condition
         self.image = enemy_img
         self.rect = self.image.get_rect()
         self.rect.topleft = init_pos
+        # got shoot
         self.down_imgs = enemy_down_imgs
         self.speed = 2
         self.down_index = 0
     
     def move(self):
+        # move down to the btm of screen in straight line
         self.rect.top += self.speed
         
     
