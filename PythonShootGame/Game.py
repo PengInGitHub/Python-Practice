@@ -29,7 +29,7 @@ from sys import exit
 
 # init the game
 pygame.init()
-# set screen
+# set screen, use set_mode() to set as window or FULLSCREEN
 screen = pygame.display.set_mode((480, 800))
 # set caption
 pygame.display.set_caption('Shoot Game')
@@ -231,6 +231,8 @@ while Running:
 
     # draw player
     if not player.is_hit:
+        # blit is used to update the screen obj
+        # the change from one screen to another makes the animation
         screen.blit(player.image[player.img_index], player.rect)
         # modify the img_index to generate animation effects
         player.img_index = shoot_frequency // 8
