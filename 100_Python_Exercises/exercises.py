@@ -147,34 +147,123 @@ def check_leap_year(year, month):
 if __name__ == '__main__':
     get_nth_day()'''
 
+###############################
+#           No.5              #
+###############################
+# Q: 题目：输入三个整数x,y,z，请把这三个数由小到大输出。
+# 程序分析：我们想办法把最小的数放到x上，先将x与y进行比较，如果x>y则将x与y的值进行交换，
+# 然后再用x与z进行比较，如果x>z则将x与z的值进行交换，这样能使x最小。
+
+def sort_num():
+    l = []
+    while True:
+        # take 3 num
+        try:
+            for i in range(3):
+                num = int(raw_input('input the %d integer: '%(i+1)))
+                l.append(num)
+            print('sorted numbers: ', sorted(l))
+            return
+          
+        except(SyntaxError, ValueError):
+            print('please check the your input is an integer')
+            continue
+    
+'''if __name__ == '__main__':
+    sort_num()'''
 
 
+###############################
+#           No.6              #
+###############################
+'''题目：斐波那契数列。
+
+程序分析：斐波那契数列（Fibonacci sequence），又称黄金分割数列，指的是这样一个数列：0、1、1、2、3、5、8、13、21、34、……。
+
+在数学上，费波那契数列是以递归的方法来定义：'''
+def fib(n):
+    # 0、1、1、2、3、5、8、13、21、34、……
+    a, b = 1, 1
+    for i in range(n-1):
+        a, b = b, a+b
+    return a 
+
+def fib_re(n):
+    # 0、1、1、2、3、5、8、13、21、34、……
+    if 0 < n < 3:
+        return 1
+    return fib_re(n-1) + fib_re(n-2)
+
+def fib_list(n):
+    fibs = [1, 1]
+    if n == 1:
+        return [1]
+    if n == 2:
+        return fibs
+    for i in range(2,n):
+        fibs.append(fibs[-1] + fibs[-2])
+    
+    return fibs
+
+'''if __name__ == '__main__':
+    print fib_list(9)'''
 
 
+###############################
+#           No.7              #
+###############################
+'''
+题目：将一个列表的数据复制到另一个列表中。
+
+程序分析：使用列表[:]。'''
+
+# copy a list content to another
+def copy_list():
+    a = [1,2,2,3]
+    b = a[:]
+    return b
+
+'''if __name__ == '__main__':
+    print copy_list()'''
 
 
+###############################
+#           No.8              #
+###############################
+'''
+题目：输出 9*9 乘法口诀表。
+
+程序分析：分行与列考虑，共9行9列，i控制行，j控制列。'''
+
+def mutiply_matrix():
+    for i in range(1, 10):
+        print
+        for j in range(1, i+1):
+            print("%d*%d=%d" % (i, j, i*j))
 
 
+###############################
+#           No.9              #
+###############################
+    
+'''题目：暂停一秒输出。
 
+程序分析：使用 time 模块的 sleep() 函数。'''
 
+import time, datetime
+def my_d():
+    my_d = {'a':1, 'b':100, 'c':101}
+    for key, value in dict.items(my_d):
+        print key, value
+        time.sleep(1) # pause for one second
 
+def print_time():
+    current = datetime.datetime.now()
+    time.sleep(1)
+    print current
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    print_time()
 
 
 
