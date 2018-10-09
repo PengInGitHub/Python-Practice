@@ -265,6 +265,578 @@ def print_time():
 if __name__ == '__main__':
     print_time()
 
+###############################
+#           No.12             #
+###############################
+    
+'''题目：判断101-200之间有多少个素数，并输出所有素数。
+
+程序分析：判断素数的方法：用一个数分别去除2到sqrt(这个数)，
+如果能被整除，则表明此数不是素数，反之是素数。 '''
+
+def find_prime(start=101, end=200):
+    total = 0
+    for i in range(start, end+1):
+        for j in range(2, i):
+            if i%j == 0:
+                break
+        else:
+            total += 1
+            print i
+    print 'total is %d'%total
+
+find_prime()
+
+###############################
+#           No.13             #
+###############################
+    
+'''题目：打印出所有的"水仙花数"，所谓"水仙花数"是指一个三位数，其各位数字立方和等于该数本身。
+例如：153是一个"水仙花数"，因为153=1的三次方＋5的三次方＋3的三次方。
+
+程序分析：利用for循环控制100-999个数，每个数分解出个位，十位，百位。'''
+def print_num():
+    # all int with three digits
+    for num in range(100,1000):
+        hun = num / 100
+        ten = num % 100 / 10
+        uni = num % 10
+        if hun*hun*hun + ten*ten*ten + uni*uni*uni == num:
+            print num
+print_num()
+
+
+###############################
+#           No.14             #
+###############################
+    
+'''题目：将一个正整数分解质因数。例如：输入90,打印出90=2*3*3*5。
+
+程序分析：对n进行分解质因数，应先找到一个最小的质数k，然后按下述步骤完成：
+(1)如果这个质数恰等于n，则说明分解质因数的过程已经结束，打印出即可。
+(2)如果n<>k，但n能被k整除，则应打印出k的值，并用n除以k的商,作为新的正整数你n,
+重复执行第一步。
+(3)如果n不能被k整除，则用k+1作为k的值,重复执行第一步。'''
+
+
+
+###############################
+#           No.16             #
+###############################
+    
+'''题目：输出指定格式的日期。
+
+程序分析：使用 datetime 模块。'''
+
+print datetime.date.today().strftime('%d/%m/%Y')
+# create date obj
+miyazaki_birthday = datetime.date(1941,1,5)
+
+# use timedelta(days=1)
+miyazaki_b_next = miyazaki_birthday + datetime.timedelta(days=1)
+print miyazaki_b_next
+
+# modify format
+print miyazaki_b_next.strftime('%d/%m/%Y')
+
+# replace 
+first_bd = miyazaki_birthday.replace(year = miyazaki_birthday.year+1)
+print first_bd.strftime('%d/%m/%Y')
+
+###############################
+#           No.17             #
+###############################
+    
+'''题目：输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数。
+
+程序分析：利用 while 或 for 语句,条件为输入的字符不为 '\n'。
+'''
+def cal(string):
+    letters, spaces, digits, others = 0, 0, 0, 0
+    for i in range(len(string)):
+        if string[i].isalpha():
+            letters += 1
+        elif string[i].isspace():
+            spaces += 1
+        elif string[i].isdigit():
+            digits += 1  
+        else:
+            others += 1
+
+    print('letters: %d, spaces: %d, digits: %d, others: %d'%(
+            letters, spaces, digits, others))
+
+
+cal('This is true: 3 + 5 = 8')
+
+
+###############################
+#           No.18             #
+###############################
+    
+'''题目：求s=a+aa+aaa+aaaa+aa...a的值，其中a是一个数字。
+例如2+22+222+2222+22222(此时共有5个数相加)，几个数相加由键盘控制。
+
+程序分析：关键是计算出每一项的值。
+'''
+
+def na(n, a):
+    mylist = []
+    for i in range(1,n+1):
+        mylist.append(int("{}".format(a)*i))
+    return sum(mylist)
+
+def na2(n, a):
+    mysum, total = 0, 0
+    for i in range(n):
+        mysum += 10**i
+        print('mysum: ', mysum)
+        total += mysum*a        
+        print('total: ', total)
+    return total
+
+print na2(4,4)        
+
+###############################
+#           No.19             #
+###############################
+    
+'''题目：一个数如果恰好等于它的因子之和，这个数就称为"完数"。
+例如6=1＋2＋3.编程找出1000以内的所有完数。
+
+程序分析：请参照程序Python 练习实例14。。
+'''
+
+
+###############################
+#           No.20             #
+###############################
+    
+'''题目：一球从100米高度自由落下，每次落地后反跳回原高度的一半；
+再落下，求它在第10次落地时，共经过多少米？第10次反弹多高？
+
+程序分析：无
+'''
+def cal_height(time = 10):
+    # mistake made here 
+    # bound_heights = 100.0
+    bound_height, bound_heights = 100.0, []
+    
+    for i in range(2, time+1):
+        bound_height /= 2 # divide by 2 for each bound
+        bound_heights.append(bound_height)
+    
+    print bound_heights
+    print('On the 10th time the ball hits the ground,'
+          'it has bound height: %f'%(min(bound_heights)/2))
+    
+    print('On the 10th time the ball hits the ground,'
+          'it has gone through %f meters in total'%(sum(bound_heights)*2+100))
+        
+cal_height()         
+
+def cal_h(time=10):
+    SumHeightN = 100.0
+    BounceHeightN = SumHeightN/2
+    for n in range(2, 11):
+        SumHeightN += 2 * BounceHeightN
+        BounceHeightN /= 2
+    
+    print 'total road is %f' % SumHeightN
+    print 'the 10th bounce height is %f' % BounceHeightN
+
+cal_h()
+
+# mistake made here
+def height():
+    new_height, ori_height = 0, 100
+    for i in range(1,11):
+        new_height += ori_height/(2*i)
+    return new_height + ori_height
+
+height()
+
+###############################
+#           No.23             #
+###############################
+'''
+题目：打印出如下图案（菱形）:
+
+   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *
+   
+程序分析：先把图形分成两部分来看待，前四行一个规律，后三行一个规律，利用双重for循环，
+第一层控制行，第二层控制列。
+
+'''
+
+from sys import stdout
+for i in range(4):
+    for j in range(2-i+1):
+        stdout.write(' ')
+    for k in range(2*i+1):
+        stdout.write('*')
+    print
+
+
+### 
+    
+
+my_matrix  =  [[1,4,5,6,0],	[2,3,1,2,3], [8,0,9,7,1]]
+def sort_matrix(amatrix, arow):
+    return map(amatrix, lambda x:sorted(x[arow]))
+
+#sort_matrix(my_matrix, 0)
+my_matrix.sort(key=lambda x:x[0])
+print my_matrix
+
+lol = [range(10), range(2,12), range(5,15)]
+print lol
+
+# transpose
+my_matrix = zip(*my_matrix)
+my_matrix.sort(key=lambda x:x[1])
+my_matrix = zip(*my_matrix)
+print my_matrix
+
+a = [
+     [12, 18, 6, 3],
+     [ 4,  3, 1, 2],
+     [15,  8, 9, 6]
+    ]
+a.sort(key=lambda x:x[1])# sort by the value of 2nd column
+
+# what we want sort 2d array by value of a row
+# what we have: sort 2d array ba value of a col
+# what we could do:
+
+# transpose col -> row
+# sort by col
+# transpose row -> col
+
+a = zip(*a)
+a.sort(key=lambda x:x[1])
+a = zip(*a)
+print(a)
+
+
+###############################
+#           No.25             #
+###############################
+'''
+题目：求1+2!+3!+...+20!的和。
+
+程序分析：此程序只是把累加变成了累乘。
+'''
+def sum_pf_products():
+    products = 1
+    sums = 0
+    for i in range(1,21):
+        products *= i
+        sums += products
+    return sums
+print '1! + 2! + 3! + ... + 20! = %d' % sum_pf_products()
+
+
+###############################
+#           No.26             #
+###############################
+# calculate a product recursively
+'''
+题目：利用递归方法求5!。
+程序分析：递归公式：fn=fn_1*4!
+'''
+def normal(num):
+    res = 1
+    for i in range(1,num+1):
+        res *= i
+    return res
+
+def recursive(num):
+    if num == 1:
+        res = 1
+    else:
+        res = num*recursive(num-1)
+    return res
+    
+print recursive(5)
+
+###############################
+#           No.27             #
+###############################
+# print a string in reverse recursively
+'''
+题目：利用递归函数调用方式，将所输入的5个字符，以相反顺序打印出来。
+'''
+
+def output(astring, length):
+    if length == 0:
+        return
+    print(astring[length-1])
+    output(astring, length-1)
+
+
+def output2(string, l):
+    # stop condition
+    if l == 0:
+        return 
+    # else
+    # print the letter which is one position further than current idx
+    print string[l-1]
+    # call next one
+    output2(string, l-1)
+    
+output2('Hello', len('Hello'))
+
+
+###############################
+#           No.28             #
+###############################
+'''
+题目：有5个人坐在一起，问第五个人多少岁？他说比第4个人大2岁。问第4个人岁数，他说比第3个人大2岁。
+问第三个人，又说比第2人大两岁。问第2个人，说比第一个人大两岁。最后问第一个人，他说是10岁。
+请问第五个人多大？
+
+程序分析：利用递归的方法，递归分为回推和递推两个阶段。要想知道第五个人岁数，
+需知道第四人的岁数，依次类推，推到第一人（10岁），再往回推。'''
+
+def get_age(num):
+    if num == 1 :
+        res = 10
+    else:
+        res = get_age(num-1) + 2
+    return res
+
+get_age(5)
+
+def fib_new(num):
+    # 0、1、1、2、3、5、8、13、21、34、……
+    if 0 < num < 3:
+        return 1
+    else:
+        return fib_new(num-1) + fib_new(num-2)
+print(fib_new(7))
+
+
+
+###############################
+#           No.29             #
+###############################
+
+# ??????
+'''
+题目：给一个不多于5位的正整数，要求：一、求它是几位数，二、逆序打印出各位数字。
+
+程序分析：学会分解出每一位数。
+'''
+def units_reverse_print(num):
+    # num is an int smaller than 100000
+    a = num / 10000
+    b = num % 10000 / 1000
+    c = num % 1000 / 100
+    d = num % 100 / 10
+    e = num % 10
+    
+    if a != 0:
+        print 'num has 5 digits, in reverse: ', e, d, c, b, a
+    elif b != 0:
+        print 'num has 4 digits, in reverse: ', e, d, c, b
+    elif c != 0:
+        print 'num has 3 digits, in reverse: ', e, d, c
+    elif d != 0:
+        print 'num has 2 digits, in reverse: ', e, d
+    else:
+        print 'num has 1 digits, in reverse: ', e
+          
+
+units_reverse_print(9010)
+
+
+
+
+
+
+
+
+###############################
+#           No.30             #
+###############################
+# if a num is Palindrome
+'''题目：一个5位数，判断它是不是回文数。即12321是回文数，个位与万位相同，十位与千位相同。
+
+程序分析：无。
+'''
+def is_palindrome(the_num):
+    
+    for i in range(len(the_num)/2):
+        # the_num here is a string
+        # the first ele: num[0]
+        # the last ele: num[-1]
+        if the_num[i] != the_num[-i-1]:
+            return False
+    return True
+
+
+print is_palindrome('1232321')        
+
+
+###############################
+#           No.31             #
+###############################
+'''
+题目：请输入星期几的第一个字母来判断一下是星期几，如果第一个字母一样，则继续判断第二个字母。
+
+程序分析：用情况语句比较好，如果第一个字母一样，则判断用情况语句或if语句判断第二个字母。。
+'''
+def guess():
+    msg = 'Please insert a letter: '
+    letter = raw_input(msg)
+    if letter == 'F':
+        print 'Friday'
+    elif letter == 'W':
+        print 'Wednesday'
+    elif letter == 'M':
+        print 'Monday'
+    elif letter == 'T':
+        letter = raw_input(msg)
+        if letter == 'u':
+            print 'Tuesday'
+        elif letter == 'h':
+            print 'Thursday'
+        else:
+            letter = raw_input('Invalid input, please restart: ')
+            guess()
+    elif letter == 'S':
+        letter = raw_input(msg)
+        if letter == 'a':
+            print 'Saturday'
+        elif letter == 'u':
+            print 'Sunday'
+        else:
+            letter = raw_input('Invalid input, please restart: ')
+    else:
+        print 'Wrong input! Please insert a startting letter of a weekday in capital'
+        guess()
+
+
+guess()
+
+
+###############################
+#           No.32             #
+###############################
+
+'''
+题目：按相反的顺序输出列表的值。
+
+程序分析：无。
+'''
+def reverse(alist):
+    return alist[::-1]
+
+print reverse([1,2,3,4,5,6,7])
+
+
+###############################
+#           No.33             #
+###############################
+
+'''
+题目：按逗号分隔列表。
+程序分析：无。
+'''
+def sep_list_comma(alist):
+    # return ','.join(alist) mistake made here
+    return ', '.join(str(a) for a in alist) 
+
+print sep_list_comma(['it', 'is', 'good'])
+
+###############################
+#           No.34             #
+###############################
+
+'''
+题目：练习函数调用。
+程序分析：无。
+'''
+def say_hello():
+    print 'Hello World'
+def say_three_times():
+    for i in range(3):
+       say_hello()
+if __name__ == '__main__': # mistake made here __'main'__
+    say_three_times()
+
+###############################
+#           No.35             #
+###############################
+
+# ???
+    
+'''
+题目：文本颜色设置。
+程序分析：无。
+'''
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+print bcolors.WARNING + "警告的颜色字体?" + bcolors.ENDC
+
+###############################
+#           No.36             #
+###############################
+# calculate prime numbers in a certain range
+'''
+题目：求100之内的素数。
+程序分析：无。
+'''
+def prime(lower, upper):
+    for num in range(lower, upper+1):
+        if num > 1:
+            for i in range(2, num):
+                if num%i == 0:
+                    break
+            else:
+                print num
+
+prime(1,100)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

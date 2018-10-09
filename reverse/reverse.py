@@ -200,6 +200,106 @@ f(3)
 # this is b/c f(3) used the same list of f(2), so the res of f(2) is in f(3)
 
 
+### set
+# unordered collections of unique elements(no duplicate elements)
+
+# create a set
+# set() or {1,2,3,4,5}
+# ele could have different immutable types: int, float, tuple, string
+# ele could not be list or dict
+my_set = {1, 2, 3}
+my_set = set([1, 2, 3])
+# raise error
+# TypeError: unhashable type: 'list'
+my_set = set([1, 2, [3, 4]])
+print my_set
+
+# init an empty set
+a = set()
+
+# modify a set
+# set is mutable
+my_set = {1, 2, 3}
+my_set.add(4)
+my_set.update([2,3,4,5,6])
+# add list and set
+my_set.update([2,3,4,5,6], {1,6,8})
+print my_set
+
+# remove ele from set()
+# a particular item can be removed from set using mehtods: 
+# dicard() and remove()
+
+my_set = {1,2,3}
+my_set.discard(3)
+print my_set
+my_set.remove(2)
+
+# using pop() to remove and return an item
+# pop() random element
+
+my_set = set('HelloWorld')
+print my_set.pop()
+
+
+# Python set operations
+# sets can be used to carry out mathematical set operations 
+# like union, intersection, difference and symmetric difference
+A, B = {1,2,3,4,5}, {4,5,6,7,8}
+
+# union of two sets
+
+print(A|B)
+# use union() func
+B.union(A)
+
+# intersection of A and B is a set of ele that are common in both sets
+A.intersection(B)
+
+# take difference
+# in A but not in B
+print A.difference(B)
+print(A-B)
+
+# symmetric difference
+print(A ^ B)
+A.symmetric_difference(B)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
