@@ -266,6 +266,24 @@ if __name__ == '__main__':
     print_time()
 
 ###############################
+#           No.11             #
+###############################
+    
+'''题目：古典问题：有一对兔子，从出生后第3个月起每个月都生一对兔子，
+小兔子长到第三个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子总数为多少？
+
+程序分析：兔子的规律为数列1,1,2,3,5,8,13,21.... '''
+
+def cal_rabbit(limit=20):
+    f1, f2, f3 = 1, 0, 0
+    for i in range(1,limit+1):
+        f3 += f2
+        f2 = f1
+        f1 = f3
+        print(f1 + f2 +f3)
+cal_rabbit()
+
+###############################
 #           No.12             #
 ###############################
     
@@ -317,8 +335,102 @@ print_num()
 (2)如果n<>k，但n能被k整除，则应打印出k的值，并用n除以k的商,作为新的正整数你n,
 重复执行第一步。
 (3)如果n不能被k整除，则用k+1作为k的值,重复执行第一步。'''
+def reduceNum(n):
+    if not isinstance(n, int) or n <= 0:
+        print ('the int is not valid!')
+        exit(0)
+    elif n in [1]:
+        print '{}'.format(n)
+    
+    # outter loop
+    while n not in [1]: # iterate 
+        # inner loop
+        for index in range(2, n+1):
+            if n % index == 0:
+                n /= index # n = n/index
+                if n == 1:
+                    print index
+                else:
+                    # n is a prime num
+                    print '{}*'.format(index)
+                break
+                    
 
+def de_prime(n):
+    I = []
+    
+    while n > 1:
+        for i in range(2, n+1):
+            if n%i == 0:
+                n = int(n/i)
+                I.append(i)
+                break
+    return I
 
+print('100='+'*'.join(str(i) for i in de_prime(100)))
+
+reduceNum(100)        
+
+def prime_dep_update(n):
+    res = []
+    while n > 1:
+        for index in range(2,n+1):
+            if n%index == 0:
+                n /= index
+                res.append(index)
+                # break terminates the innermost for loop
+                # then restart the for loop since while loop continues
+                break
+    return res
+
+prime_dep_update(100)
+
+'''
+break and continue                      
+       enter loop -> test expression    -> False    -> Exit loop
+                                        -> True
+                                         |                                           
+           ^                             V                ^ 
+           |             <-  False    break    True  ->   |
+'''
+
+def test_prime(n):
+    if 0< n < 3:
+        return n
+    # outtermost loop
+    res = []
+    while n > 1:
+        # innermost loop
+        for i in range(2, n+1):
+            if n%i == 0:
+                n /= i
+                res.append(i)     
+                break
+    return res
+
+test_prime(100)
+
+###############################
+#           No.15             #
+###############################
+'''
+题目：利用条件运算符的嵌套来完成此题：学习成绩>=90分的同学用A表示，60-89分之间的用B表示，
+        60分以下的用C表示。
+
+程序分析：程序分析：(a>b)?a:b这是条件运算符的基本例子。
+'''
+def score_cut(score):
+    if score >= 90:
+        grade = 'A'
+#   elif 60 <= score <= 89:
+        # mistake made here
+    elif 60 <= score:
+        grade = 'B'
+    else:
+        grade = 'C'
+    return grade
+
+print score_cut(98)
 
 ###############################
 #           No.16             #
@@ -407,6 +519,48 @@ print na2(4,4)
 程序分析：请参照程序Python 练习实例14。。
 '''
 
+###############################
+#           No.19             #
+###############################
+    
+'''题目：一个数如果恰好等于它的因子之和，这个数就称为"完数"。
+例如6=1＋2＋3.编程找出1000以内的所有完数。
+
+程序分析：请参照程序Python 练习实例14。
+'''
+
+def test_prime(n):
+    if 0< n < 3:
+        return n
+    # outtermost loop
+    res = []
+    while n > 1:
+        # innermost loop
+        for i in range(2, n+1):
+            if n%i == 0:
+                n /= i
+                res.append(i)     
+                break
+    return res
+
+import math
+def complete(n):
+    res = [1]
+    if n <= 2:
+        return res
+    for i in range(2, int(math.sqrt(n))+1):
+        if n%i == 0:
+            res.extend([i, n/i])
+            #res.append(i)
+                
+    return sum(set(res))
+
+def com():
+    for num in range(2,1001):
+        if num == complete(num):
+            print(str(num) + '\n')
+
+com()
 
 ###############################
 #           No.20             #
@@ -457,6 +611,46 @@ def height():
 height()
 
 ###############################
+#           No.21             #
+###############################
+'''
+题目：猴子吃桃问题：猴子第一天摘下若干个桃子，当即吃了一半，还不瘾，
+又多吃了一个第二天早上又将剩下的桃子吃掉一半，又多吃了一个。
+以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。
+求第一天共摘了多少。
+
+程序分析：采取逆向思维的方法，从后往前推断。
+'''
+
+def get_fruits():
+    x_left = 1
+    start, stop, step = 9, 0, -1
+    for i in range(start, stop, step):
+        x_used_to_have = (x_left + 1)*2
+        x_left = x_used_to_have
+    return x_used_to_have
+
+get_fruits() # 1534
+
+###############################
+#           No.22             #
+###############################
+'''
+题目：两个乒乓球队进行比赛，各出三人。甲队为a,b,c三人，乙队为x,y,z三人。
+已抽签决定比赛名单。有人向队员打听比赛的名单。
+a说他不和x比，c说他不和x,z比，请编程序找出三队赛手的名单。
+'''
+def match():
+    for a in ['x', 'y', 'z']:
+        for b in ['x', 'y', 'z']:
+            for c in ['x', 'y', 'z']:
+                if a != b and b!=c and c!=a and a!='x' and c!='x' and c!='z':
+                    print('a vs. %s, b vs. %s, c vs. %s' % (a, b, c))
+
+match()
+
+
+###############################
 #           No.23             #
 ###############################
 '''
@@ -472,19 +666,29 @@ height()
    
 程序分析：先把图形分成两部分来看待，前四行一个规律，后三行一个规律，利用双重for循环，
 第一层控制行，第二层控制列。
-
 '''
-
 from sys import stdout
-for i in range(4):
-    for j in range(2-i+1):
-        stdout.write(' ')
-    for k in range(2*i+1):
-        stdout.write('*')
-    print
-
-
-### 
+def print_diamond():
+    # upper part, 4 lines
+    for line in range(4):
+        for space in range(2 - line + 1):
+            stdout.write(' ')
+        for astra in range(2 * line + 1):
+            stdout.write('*')
+        print # mistake made here
+    
+    # lower part, 3 lines
+    for line in range(3):
+        for space in range(line + 1):
+            stdout.write(' ')
+        for astra in range(4 - 2*line + 1):
+            stdout.write('*')
+        print
+            
+print_diamond()
+###############################
+#          sort matrix        #
+###############################
     
 
 my_matrix  =  [[1,4,5,6,0],	[2,3,1,2,3], [8,0,9,7,1]]
@@ -524,7 +728,23 @@ a.sort(key=lambda x:x[1])
 a = zip(*a)
 print(a)
 
+###############################
+#           No.24             #
+###############################
+'''
+题目：有一分数序列：2/1，3/2，5/3，8/5，13/8，21/13...求出这个数列的前20项之和。
 
+程序分析：请抓住分子与分母的变化规律。
+'''
+def cal_s(max_n = 20):
+    a, b, s = 2.0, 1.0, 0.0
+    for i in range(max_n):
+        s += a / b
+        a, b = a + b, a
+    
+    return s
+
+cal_s() # 32.66
 ###############################
 #           No.25             #
 ###############################
