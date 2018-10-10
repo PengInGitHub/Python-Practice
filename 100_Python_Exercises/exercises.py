@@ -8,6 +8,18 @@ Created on Mon Oct  1 22:22:35 2018
 # resource
 # http://www.runoob.com/python/python-exercise-example1.html
 
+
+
+
+
+
+
+
+
+
+
+
+
 ###############################
 #           No.1              #
 ###############################
@@ -17,14 +29,17 @@ Created on Mon Oct  1 22:22:35 2018
 # 组成所有的排列后再去 掉不满足条件的排列。
 
 def get_results():
+    count = 0
     for i in range(1,5):
         for j in range(1,5):
             for k in range(1,5):
                 if i != k and i != j and k!= j:
                     print i, j, k
+                    count += 1
+    return count
 
-'''if __name__ == '__main__':
-    get_results()'''
+if __name__ == '__main__':
+    print get_results()
 
 
 ###############################
@@ -57,9 +72,7 @@ def calculate_commission():
         except(SyntaxError, ValueError):
             print('Please input a number.')
             continue
-'''
-if __name__ == '__main__':
-    calculate_commission()'''
+calculate_commission()
 
 
 ###############################
