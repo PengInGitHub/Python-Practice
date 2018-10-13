@@ -699,47 +699,6 @@ def print_diamond():
         print
             
 print_diamond()
-###############################
-#          sort matrix        #
-###############################
-    
-
-my_matrix  =  [[1,4,5,6,0],	[2,3,1,2,3], [8,0,9,7,1]]
-def sort_matrix(amatrix, arow):
-    return map(amatrix, lambda x:sorted(x[arow]))
-
-#sort_matrix(my_matrix, 0)
-my_matrix.sort(key=lambda x:x[0])
-print my_matrix
-
-lol = [range(10), range(2,12), range(5,15)]
-print lol
-
-# transpose
-my_matrix = zip(*my_matrix)
-my_matrix.sort(key=lambda x:x[1])
-my_matrix = zip(*my_matrix)
-print my_matrix
-
-a = [
-     [12, 18, 6, 3],
-     [ 4,  3, 1, 2],
-     [15,  8, 9, 6]
-    ]
-a.sort(key=lambda x:x[1])# sort by the value of 2nd column
-
-# what we want sort 2d array by value of a row
-# what we have: sort 2d array ba value of a col
-# what we could do:
-
-# transpose col -> row
-# sort by col
-# transpose row -> col
-
-a = zip(*a)
-a.sort(key=lambda x:x[1])
-a = zip(*a)
-print(a)
 
 ###############################
 #           No.24             #
@@ -1054,12 +1013,232 @@ prime(1,100)
 
 程序分析：用第一个与最后一个交换
 '''
+def reverse(alist):
+    #return alist[::-1]
+    n = len(alist)
+    for i in range(n/2):
+        #swap
+        alist[i], alist[n-i-1] = alist[n-i-1], alist[i]
+    return alist
+
+print reverse([9, 6, 5, 4, 1])
 
 
 
+###############################
+#           No.41             #
+###############################
+'''
+题目：模仿静态变量的用法。
+
+程序分析：无。
+'''
+# var as a variable in a func
+def varfunc():
+    var = 0
+    print 'var equals to %d' % var
+    var += 1
+
+def print_var():
+    for i in range(3):
+        varfunc() 
 
 
+print_var()
 
+# var as an attribute in class
+class Var:
+    StaticVar = 5
+    def var(self):
+        self.StaticVar += 3
+        print self.StaticVar
+            
+
+print Var.StaticVar
+
+v = Var()
+for i in range(3):
+    v.var()
+
+
+###############################
+#           No.42             #
+###############################
+'''
+题目：学习使用auto定义变量的用法。
+
+程序分析：没有auto关键字，使用变量作用域来举例吧。
+'''
+num = 2
+
+def autofunc():
+    num = 1
+    print 'num equals to %d' % num
+    num += 1
+
+for i in range(3):
+    print 'the num is %d' % num
+    num += 1
+    autofunc()
+
+
+###############################
+#           No.43             #
+###############################
+'''
+题目：模仿静态变量(static)另一案例。
+
+程序分析：演示一个python作用域使用方法。
+'''
+class Num:
+    nNum = 1
+    def inc(self):
+        self.nNum += 1
+        print 'nNUM = %d' % self.nNum
+    
+if __name__ == '__main__':
+    nNum = 2
+    inst = Num()
+    for i in range(3):
+        nNum += 1
+        print 'nNum equals to %d' % nNum
+        inst.inc()
+
+
+###############################
+#           No.44             #
+###############################
+'''
+两个 3 行 3 列的矩阵，实现其对应位置的数据相加，并返回一个新矩阵：
+'''
+
+def sum_matrix(A, B):
+    res = [[0,0,0],
+           [0,0,0],
+           [0,0,0]]
+    
+    for x in range(len(A)):
+        for y in range(len(A[0])):
+            res[x][y] = A[x][y] + B[x][y]
+    return res
+
+X = [[12,7,3],
+    [4 ,5,6],
+    [7 ,8,9]]
+ 
+Y = [[5,8,1],
+    [6,7,3],
+    [4,5,9]]
+
+print sum_matrix(X, Y)
+
+
+###############################
+#           No.45             #
+###############################
+'''
+统计 1 到 100 之和。
+'''
+
+def cal_100():
+    #return sum(range(1,101))
+    res = 0
+    for i in range(1,101):
+        res += i
+    return res
+print cal_100()
+
+
+###############################
+#           No.46             #
+###############################
+'''
+题目：求输入数字的平方，如果平方运算后小于 50 则退出。
+
+'''
+# use a flag to control the loop
+def get_50():
+    again = True
+    while again:
+        num =int(raw_input('Please give an int: '))
+        square = num*num
+        if square < 50:
+            again = False
+        else:
+            again = True
+
+get_50()
+
+###############################
+#           No.47             #
+###############################
+'''
+题目：两个变量值互换。
+
+'''
+def exchange(a, b):
+    a, b = b, a
+    return a, b
+
+a, b = 4, 5
+print 'a: %d, b: %d' % (a, b)
+print 'a: %d, b: %d' % exchange(a, b)
+
+
+###############################
+#           No.48             #
+###############################
+'''
+题目：数字比较。
+'''
+def com(a, b):
+    if a > b:
+        print 'a is larger than b'
+    elif a < b:
+        print 'a is smaller than b'
+    else:
+        print 'a is equal to b'
+
+
+com(5,4)
+
+###############################
+#           No.49             #
+###############################
+'''
+题目：使用lambda来创建匿名函数。
+
+'''
+
+def max_complex(x,y):
+    return (x>y)*x + (x<=y)*y
+
+def min_complex(x,y):
+    return (x>y)*y + (x<=y)*x
+
+print max_complex(3,4)
+print min_complex(3,4)
+
+max_simple = lambda x,y : (x>y)*x + (x<=y)*y
+min_simple = lambda x,y : (x>y)*y + (x<=y)*x
+
+print max_simple(3,4)
+print min_simple(3,4)
+
+###############################
+#           No.50             #
+###############################
+'''
+题目：输出一个随机数。
+'''
+
+import random
+def get_random():
+    print random.uniform(10,20)
+    print random.randint(10,20)
+    print random.choice([x for x in range(1,101)])
+
+get_random()
 
 
 
